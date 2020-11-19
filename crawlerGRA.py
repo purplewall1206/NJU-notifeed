@@ -8,12 +8,13 @@ sys.path.append('/home/wangzc/Documents/notifeed')
 from news import news
 from news import newslist
 
+
 def gra_crawler():
     # newslist = []
     newsUrlPrefix = 'https://grawww.nju.edu.cn'
     r = requests.get('https://grawww.nju.edu.cn/905/list.htm', timeout=5)
     soup = BeautifulSoup(r.text,features="html5lib")
-
+    
 
     nlist = soup.find_all('li')
     item_list = []
@@ -36,13 +37,3 @@ def gra_crawler():
         newslist.append(N.genRSSItem())
 
 
-    # rss = PyRSS2Gen.RSS2(
-    #     title = "gra notification",
-    #     link = "http://pyb.nju.edu.cn/shownoticelist.action",
-    #     description = "南京大学研究生院",
-    #     lastBuildDate = datetime.datetime.now(),
-
-    #     items = newslist
-    # )
-
-    # rss.write_xml(open("feedgra.xml", "w"))
