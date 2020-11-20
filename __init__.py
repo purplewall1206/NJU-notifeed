@@ -20,6 +20,7 @@ lock = threading.Lock()
 
 def genFeed():
     while True:
+        newslist = []
         pyb_crawler()
         logging.info('pyb crawler launched')
         gra_crawler()
@@ -34,7 +35,7 @@ def genFeed():
         
         rss.write_xml(open("feed.xml", "w",encoding='UTF-8',errors='ignore'))
         logging.info('generate feed file')
-        newslist = []
+        
         lock.acquire(True)
         global feed 
         with open('feed.xml', "r",encoding='utf8') as f:
