@@ -20,7 +20,6 @@ lock = threading.Lock()
 
 def genFeed():
     while True:
-        newslist = []
         pyb_crawler()
         logging.info('pyb crawler launched')
         gra_crawler()
@@ -42,7 +41,7 @@ def genFeed():
             feed = f.read()
         lock.release()
         logging.info('update rss feed')
-
+        newslist.clear()
         time.sleep(1000)
 
 
