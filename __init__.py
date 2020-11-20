@@ -31,9 +31,10 @@ def genFeed():
             lastBuildDate = datetime.datetime.now(),
             items = newslist
         )
-        newslist = []
+        
         rss.write_xml(open("feed.xml", "w",encoding='UTF-8',errors='ignore'))
         logging.info('generate feed file')
+        newslist = []
         lock.acquire(True)
         global feed 
         with open('feed.xml', "r",encoding='utf8') as f:
