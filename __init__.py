@@ -7,14 +7,16 @@ from flask import Flask, escape, url_for
 import PyRSS2Gen
 import datetime
 import time
-import _thread
+import threading
 import logging
 
 logging.basicConfig(format="%(asctime)s %(name)s:%(levelname)s:%(message)s",filename='logger.log',level=logging.INFO)
 
 app = Flask(__name__)
-# 线程不安全，不过flask没研究基本黑箱状态，要啥自行车
+
 global feed
+
+lock = threading.Lock()
 
 def genFeed():
     while True:
@@ -32,9 +34,11 @@ def genFeed():
 
         rss.write_xml(open("feed.xml", "w"))
         logging.info('generate feed file')
+        lock.acquire(True)
         global feed 
         with open('feed.xml', "r") as f:
             feed = f.read()
+        lock.release()
         logging.info('update rss feed')
 
         time.sleep(1000)
@@ -43,14 +47,19 @@ def genFeed():
 
 @app.route('/rss')
 def rss():    
-    # print(feed)
-    return feed
+    RSS = ''
+    lock.acquire(True)
+    RSS = feed
+    lock.release()
+    return RSS
+    
+
 
 
 if __name__ =="__main__":
     
     try:
-        _thread.start_new_thread(genFeed, ())
+        threading.Thread(target=genFeed).start()
     except:
         logging.error('thread failure')
     
