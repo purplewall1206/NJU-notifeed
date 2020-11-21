@@ -8,6 +8,13 @@ sys.path.append('/home/wangzc/Documents/notifeed')
 from news import news
 from news import newslist
 
+def genDesc(url=''):
+    r = requests.get(url)
+    soup = BeautifulSoup(r.text, features="html5lib")
+    article = soup.find_all("div",class_="article")
+    # print(str(article[0]))
+    return str(article[0])
+
 
 def gra_crawler():
     # newslist = []
@@ -31,7 +38,7 @@ def gra_crawler():
         N = news(
             title = title,
             date = datestr,
-            description = title,
+            description = genDesc(url),
             href = url
         )
         newslist.append(N.genRSSItem())

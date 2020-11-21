@@ -8,6 +8,14 @@ sys.path.append('./')
 from news import news
 from news import newslist
 
+def genDesc(url=''):
+    r = requests.get(url)
+    soup = BeautifulSoup(r.text, features="html5lib")
+    article = soup.find_all("div",class_='middleside')
+    return str(article[0])
+
+
+
 def pyb_crawler():
     # newslist = []
     newsUrlPrefix = 'http://pyb.nju.edu.cn/'
@@ -22,11 +30,12 @@ def pyb_crawler():
             tmpdate = ''
         else :
             tmpdate = str(link.span.text).strip()
+        url = newsUrlPrefix+str(taga.get('href'))
         N = news(
             title = str(taga.text),
             date = tmpdate,
-            description = str(taga.text),
-            href = newsUrlPrefix+str(taga.get('href')),
+            description = genDesc(url),
+            href = url,
         )
         newslist.append(N.genRSSItem())
 

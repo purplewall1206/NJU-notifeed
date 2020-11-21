@@ -22,6 +22,8 @@ class news:
             title = self.title, 
             link = self.href,
             pubDate = pubDate,
+            description = self.description,
+            # guid = PyRSS2Gen.Guid(self.href)
         )
 
 newslist = []
