@@ -47,6 +47,7 @@ def genFeed():
 
 @app.route('/rss')
 def rss():    
+    global feed
     RSS = ''
     lock.acquire(True)
     RSS = feed
