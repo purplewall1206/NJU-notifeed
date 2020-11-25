@@ -55,7 +55,7 @@ def rss():
     lock.release()
     return RSS
     
-
+# 这地方的锁显然有问题，必须想办法处理一下！！！！
 
 
 if __name__ =="__main__":
