@@ -1,4 +1,5 @@
-import requests
+# coding: utf8
+mport requests
 import sys
 from bs4 import BeautifulSoup
 import datetime

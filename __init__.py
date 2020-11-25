@@ -1,3 +1,4 @@
+# coding: utf8
 import sys
 sys.path.append('./')
 from crawlerPYB import pyb_crawler
